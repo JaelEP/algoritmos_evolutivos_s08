@@ -1,0 +1,14 @@
+¿Cuál representación logra mejor equilibrio entre los grupos?
+
+Para ver cual de las representaciones tiene un mayor equilibrio debemos observar cuál es la desviación estándar entre los promedios de los exámenes.
+	» Representación Binaria: 0.3977
+	» Representación Real: 0.0363
+	» Representación Permutacional: 0.0363
+Viendo cada una de las desviaciones estándar obtenidas en la ejecución, podemos afirmar que la representación real y la permutacional logran un mejor equilibrio entre los grupos, con una desviación estándar más baja a comparación con la binaria.
+
+¿Cuál converge más rápido? (observa las generaciones)
+La velocidad de convergencia se puede observar a través del número de generaciones para alcanzar los mejores resultados:
+	»Representación Binaria: En la generación 60, el mejor fitness sigue siendo bastante bajo (aproximadamente -1000), lo que nos indica que esta 	representación no converge rápidamente.
+	»Representación Real: El mejor fitness mejora rápidamente, y la optimización parece estabilizarse en de manera temprana. En la generación 90, el 		mejor fitness es consistente.
+	»Representación Permutacional: El mejor fitness comienza a mejorar rápidamente, alcanzando valores más altos a partir de la generación 30, pero no 	parece converger tan rápido como la representación real.
+Entonces, con el análisis de las generaciones podemos indicar que la representación real converge más rápido que las otras, ya que los cambios de fitness son más significativos y se estabilizan antes.

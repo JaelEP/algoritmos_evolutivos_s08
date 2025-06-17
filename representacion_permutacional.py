@@ -22,6 +22,13 @@ def decodificar_cromosoma(cromosoma):
 def calcular_fitness(cromosoma):
     asignaciones = decodificar_cromosoma(cromosoma)
     
+    # Penalización por restricción: Los alumnos con notas < 11 no pueden estar todos en el mismo examen
+    for examen in ['A', 'B', 'C']:
+        indices = asignaciones[examen]
+        notas_examen = [notas[i] for i in indices]
+        if sum(1 for nota in notas_examen if nota < 11) == len(notas_examen):
+            return -1000  # Penalizamos con un valor bajo si la restricción no se cumple
+    
     promedios = {}
     for examen in ['A', 'B', 'C']:
         indices = asignaciones[examen]
@@ -156,6 +163,3 @@ print("\nEvolución del algoritmo:")
 print(f"Fitness inicial: {historial[0]:.4f}")
 print(f"Fitness final: {historial[-1]:.4f}")
 print(f"Mejora total: {((historial[-1] - historial[0]) / abs(historial[0]) * 100):.1f}%")
-
-
-#

@@ -83,15 +83,23 @@ def cruce(padre1, padre2):
     
     return hijo
 
-def mutacion(cromosoma):
+# Implementación del nuevo operador de mutación gaussiana
+def mutacion_gaussiana(cromosoma, sigma=0.3):
     cromosoma_mutado = cromosoma.copy()
     
     for i in range(39):
-        if random.random() < 0.1:
-            idx = i * 3
-            nuevos_pesos = [random.random() for _ in range(3)]
-            suma = sum(nuevos_pesos)
-            cromosoma_mutado[idx:idx+3] = [p/suma for p in nuevos_pesos]
+        idx = i * 3
+        perturbacion = [random.gauss(0, sigma) for _ in range(3)]
+        nuevos_pesos = [cromosoma_mutado[idx + j] + perturbacion[j] for j in range(3)]
+        
+        # Normalización para que la suma sea igual a 1
+        suma = sum(nuevos_pesos)
+        if suma > 0:
+            nuevos_pesos = [p / suma for p in nuevos_pesos]
+        else:
+            nuevos_pesos = [1/3, 1/3, 1/3]  # En caso de que la suma sea cero, distribuimos igual entre los tres exámenes
+        
+        cromosoma_mutado[idx:idx+3] = nuevos_pesos
     
     return cromosoma_mutado
 
@@ -120,7 +128,7 @@ def algoritmo_genetico(generaciones=150, tam_poblacion=100):
             padre2 = random.choice(poblacion[:tam_poblacion//4])[0] if isinstance(poblacion[0], tuple) else random.choice(poblacion[:tam_poblacion//4])
             
             hijo = cruce(padre1, padre2)
-            hijo = mutacion(hijo)
+            hijo = mutacion_gaussiana(hijo)  # Usamos la mutación gaussiana
             nueva_poblacion.append(hijo)
         
         poblacion = nueva_poblacion
